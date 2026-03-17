@@ -1,0 +1,9 @@
+*.swp
+*.swo
+*.swn
+*.log
+lib/
+build/
+bin/
+docs/build
+clang.analysis
