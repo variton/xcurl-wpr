@@ -15,7 +15,7 @@ docker build -t igcc-u2404:1.0 .
 
 1. Go to the xcurl-wpr directory
 
-2. Build and run the simulation
+2. Launch the container
 
 create the docker container
 

@@ -21,6 +21,29 @@ docker pull ghcr.io/variton/icxx-resolute:1.0
 
 ```
 
+## Create the docker container env to develop the xcurl-wpr
+
+```
+docker run --name=cxx-resolute --hostname=cypher -v $PWD:/home/cxx-core --net=host --restart=no -it icxx-resolute:1.0 /bin/bash
+
+```
+
+## Build & compile xcurl-wpr
+in debug:
+
+```
+./build-doc.sh debug
+
+```
+in release:
+
+```
+./build-doc.sh release
+
+```
+
+## Install libxcurlwpr
+
 ## Generate the documentation
 *remark:*
     *make sure to use the icxx-resolute:1.0 docker image*
