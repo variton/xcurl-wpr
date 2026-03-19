@@ -17,6 +17,15 @@ if(NOT spdlog_FOUND)
     )
 endif()
 
+find_package(fmt)
+if(NOT fmt_FOUND)
+    message(FATAL_ERROR
+        "libspdlog-dev not found.\n"
+        "On Ubuntu, install it with:\n"
+        "  sudo apt install libfmt-dev"
+    )
+endif()
+
 include(FetchContent)
 
 FetchContent_Declare(

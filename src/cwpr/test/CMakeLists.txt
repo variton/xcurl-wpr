@@ -9,7 +9,11 @@ target_include_directories(test_xcurl PUBLIC
   $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(test_xcurl PRIVATE cwpr doctest::doctest)
+target_link_libraries(test_xcurl PRIVATE 
+                      cwpr 
+                      doctest::doctest 
+                      fmt::fmt
+                      CURL::libcurl)
 
 target_compile_options(test_xcurl PRIVATE 
                        -Wall -Wextra -pedantic
