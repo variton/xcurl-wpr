@@ -39,6 +39,12 @@ public:
     explicit Xcurl(std::string_view url) noexcept;
 
     /**
+     * @brief default desctructor. 
+     *
+     */
+     ~Xcurl();
+
+    /**
      * @brief Access the internal response buffer.
      *
      * Shorthand for read_buffer().
@@ -59,7 +65,7 @@ public:
      *
      * @return true on success, false otherwise.
      */
-    bool extract() noexcept;
+    bool fetch_data() noexcept;
 
     /**
      * @brief Get the response buffer.
@@ -79,7 +85,7 @@ private:
     /**
      * @brief Initialize internal resources.
      */
-    void init();
+    void init() noexcept;
 
     /// Target URL (non-owning reference)
     std::string_view url_;
@@ -90,8 +96,13 @@ private:
     /// Opaque internal implementation/cache
     struct cache;
 
+    /// Custom deleter for Opaque internal implementation/cache
+    struct Deleter {
+        void operator()(cache * p) noexcept;
+    };
+
     /// Pointer to internal state
-    std::unique_ptr<cache> cache_;
+    std::unique_ptr<cache,Deleter> cache_;
 };
 
 }
