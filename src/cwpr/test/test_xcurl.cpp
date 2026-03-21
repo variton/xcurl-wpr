@@ -23,7 +23,6 @@ TEST_CASE("Xcurl") {
   // fmt::print("xcurl status -> {}\n",xcurl.status());
   CHECK(xcurl.status()==CURLE_OK);
   CHECK(xcurl.http_code() == HTTP_NOT_SET);
-  //should be an enum with a mapped value with CURlCode : uint8_t
 }
 
 //TEST_CASE("Xcurl with init KO") {
@@ -36,14 +35,14 @@ TEST_CASE("Xcurl") {
 TEST_CASE("read_buffer empty") {
   cwpr::Xcurl xcurl{"https://httpbin.org/get"};
   CHECK(xcurl.read_buffer().empty());
-  CHECK(xcurl.status() == CURLE_NO_REQ);
+  CHECK(xcurl.status() == CURLE_OK);
   CHECK(xcurl.http_code() == HTTP_NOT_SET);
 }
 
 TEST_CASE("functor [read_buffer empty]"){
   cwpr::Xcurl xcurl{"https://httpbin.org/get"};
   CHECK(xcurl().empty());
-  CHECK(xcurl.status() == (CURLcode)CURLE_NO_REQ);
+  CHECK(xcurl.status() == CURLE_OK);
   CHECK(xcurl.http_code() == HTTP_NOT_SET);
 }
 

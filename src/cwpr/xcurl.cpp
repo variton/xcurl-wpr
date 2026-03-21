@@ -1,15 +1,24 @@
 
+#include <utility>
+
 #include <netdb.h>
 #include <xcurl.h>
-
 //#include <fmt/core.h>
 
 namespace{
 // usefull static function use by curl lib 
   static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
-    (reinterpret_cast<std::string *>(userp))->append(reinterpret_cast<char *>(contents), size * nmemb);
-    return size * nmemb;
+    const auto total = size * nmemb;
+    auto * buffer = reinterpret_cast<std::string *>(userp);
+    buffer->append(reinterpret_cast<const char *>(contents), size * nmemb);
+    return total;
   }
+
+  template <typename Func, typename... Args>
+  CURLcode call_curl(Func func, Args&&... args) noexcept {
+    return func(std::forward<Args>(args)...);
+  }
+
 }
 
 namespace cwpr{
@@ -26,29 +35,27 @@ struct Xcurl::cache{
         curl_easy_cleanup(curl_);
         curl_ = nullptr;
       }
-      curl_global_cleanup();
     }
 
     CURL * curl_;
     CURLcode res_;
-    int16_t http_code_;
+    long http_code_;
 };
 //end of cache implementation---------------------------------------------------------------
 
 void Xcurl::init() noexcept{
-  if(cache_ || cache_->curl_) {
+  if(cache_ && cache_->curl_) {
     cache_->res_=curl_easy_setopt(cache_->curl_,
                                   CURLOPT_URL,
-                                  url_.data());
+                                  url_.c_str());
   }
 }
 
-Xcurl::Xcurl(std::string_view url) noexcept
+Xcurl::Xcurl(const std::string & url) noexcept
     : url_(url),
       read_buffer_{},
       cache_(std::make_unique<cache>())
 {
-  curl_global_init(CURL_GLOBAL_DEFAULT);
   init();
 }
 
@@ -63,25 +70,27 @@ bool Xcurl::has_network() noexcept{
 }
 
 bool Xcurl::fetch_data() noexcept {
-  if(cache_->curl_) {
-    curl_easy_setopt(cache_->curl_, CURLOPT_WRITEFUNCTION, ::WriteCallback);
-    curl_easy_setopt(cache_->curl_, CURLOPT_WRITEDATA, &read_buffer_);
-    cache_->res_ = curl_easy_perform(cache_->curl_);
+  if(!cache_ || !cache_->curl_) return false;
 
-    if (cache_->res_ == CURLE_OK) {
-        curl_easy_getinfo(cache_->curl_,
-                          CURLINFO_RESPONSE_CODE,
-                          & cache_->http_code_);
-    }
-  }
-  return (cache_->res_ == CURLE_OK) &&
-         (cache_->http_code_ >= 200 && cache_->http_code_ < 300);
+  cache_->res_ = ::call_curl(curl_easy_setopt,cache_->curl_,CURLOPT_WRITEFUNCTION,::WriteCallback);
+  if (cache_->res_ != CURLE_OK) return false;
+
+  cache_->res_ = ::call_curl(curl_easy_setopt,cache_->curl_,CURLOPT_WRITEDATA, &read_buffer_);
+  if (cache_->res_ != CURLE_OK) return false;
+
+  cache_->res_ = ::call_curl(curl_easy_perform,cache_->curl_);
+  if (cache_->res_ != CURLE_OK) return false;
+
+  cache_->res_ = ::call_curl(curl_easy_getinfo,
+                             cache_->curl_,
+                             CURLINFO_RESPONSE_CODE,
+                             & cache_->http_code_);
+  if (cache_->res_ != CURLE_OK) return false;
+
+  return cache_->http_code_ >= 200 && cache_->http_code_ < 300;
 }
 
 std::string_view Xcurl::read_buffer() noexcept{
-    if (read_buffer_.empty()){
-      if (cache_->res_ == CURLE_OK ) cache_->res_ =(CURLcode) CURLE_NO_REQ;
-    }
     return read_buffer_;
 }
 
@@ -89,7 +98,7 @@ CURLcode Xcurl::status() const noexcept{
   return cache_->res_;
 }
 
-int16_t Xcurl::http_code() const noexcept{
+long Xcurl::http_code() const noexcept{
   return cache_->http_code_;
 }
 
