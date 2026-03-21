@@ -6,6 +6,7 @@
 #ifndef XCURL_GLOBAL_H
 #define XCURL_GLOBAL_H
 
+#include <concepts>
 #include <ncnm.h>
 
 namespace cwpr {
@@ -19,6 +20,11 @@ namespace cwpr {
  */
 template <typename T>
 using Default = utils::NCNM<T>;
+
+template <typename T>
+concept HasBoolStatus = requires(const T& t) {
+    { t.status() } noexcept -> std::same_as<bool>;
+};
 
 /**
  * @brief RAII wrapper for global cURL initialization and cleanup.
@@ -60,6 +66,9 @@ private:
      */
     bool status_;
 };
+
+static_assert(HasBoolStatus<XcurlGlobal>,
+              "XcurlGlobal must provide bool status() const noexcept");
 
 } // namespace cwpr
 
