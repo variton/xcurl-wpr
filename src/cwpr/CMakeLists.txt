@@ -1,6 +1,7 @@
 
 add_library(cwpr SHARED 
-    xcurl.cpp)
+    xcurl.cpp
+    xcurl_global.cpp)
 
 target_link_libraries(cwpr PRIVATE CURL::libcurl)
 
