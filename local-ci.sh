@@ -16,8 +16,11 @@ cd $BUILD_DIR
 ctest --output-on-failure -j `nproc` 
 
 #launch quality tests
-cd 
+cd $LAB 
+#run quality test for xcurl impl
 valgrind --leak-check=full ./bin/test_xcurl
+#run quality test for xcurl_global impl
+valgrind --leak-check=full ./bin/test_xcurl_global
 
 #launch test coverage
 
