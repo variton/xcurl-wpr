@@ -13,7 +13,6 @@
 #include <curl/curl.h>
 
 #define HTTP_NOT_SET -1
-#define CURLE_NO_REQ 10000
 
 namespace cwpr {
 
@@ -53,7 +52,7 @@ public:
      * @warning The provided URL is stored as a non-owning view and must
      * outlive this object.
      */
-    explicit Xcurl(std::string_view url) noexcept;
+    explicit Xcurl(const std::string & url) noexcept;
 
     /**
      * @brief Destructor.
@@ -120,7 +119,7 @@ public:
      *
      * @return HTTP status code, or HTTP_NOT_SET if unavailable.
      */
-    std::int16_t http_code() const noexcept;
+    long http_code() const noexcept;
 
 private:
     /**
@@ -128,8 +127,8 @@ private:
      */
     void init() noexcept;
 
-    /// Target URL stored as a non-owning view.
-    std::string_view url_;
+    /// Target URL stored as const string ref.
+    const std::string & url_;
 
     /// Response buffer owned by this object.
     std::string read_buffer_;
