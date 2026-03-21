@@ -1,6 +1,6 @@
 /**
  * @file xcurl.h
- * @brief Curl wrapper class.
+ * @brief Lightweight cURL wrapper for simple HTTP requests.
  */
 
 #ifndef XCURL_H
@@ -10,108 +10,137 @@
 #include <memory>
 #include <string_view>
 #include <ncnm.h>
-
 #include <curl/curl.h>
 
 #define HTTP_NOT_SET -1
 #define CURLE_NO_REQ 10000
 
-namespace cwpr{
+namespace cwpr {
 
 /**
- * @brief Non-copyable, non-movable base alias.
+ * @brief Alias for a non-copyable, non-movable base class.
  *
- * Prevents copying and moving of derived types.
+ * Prevents copying and moving of derived types via CRTP.
+ *
+ * @tparam T Derived type.
  */
 template <typename T>
 using Default = utils::NCNM<T>;
 
 /**
- * @brief Lightweight URL request/response wrapper.
+ * @brief Simple RAII wrapper for performing HTTP requests using cURL.
  *
- * Handles fetching data from a given URL and storing the result
- * in an internal buffer. The class owns internal resources and
- * is non-copyable and non-movable.
+ * Stores the response in an internal buffer and provides accessors
+ * for request status and response data.
+ *
+ * @warning This class stores the URL as a non-owning std::string_view.
+ * The caller must ensure that the referenced URL remains valid for the
+ * entire lifetime of the object.
+ *
+ * @warning Instances of this class are not thread-safe. Concurrent access
+ * to the same object must be externally synchronized.
+ *
+ * @note Using libcurl typically requires global initialization with
+ * curl_global_init() before creating request handles.
  */
-class Xcurl:public Default<Xcurl>{
-
+class Xcurl : public Default<Xcurl> {
 public:
     /**
-     * @brief Construct with target URL.
+     * @brief Construct a request for the given URL.
      *
-     * @param url Target URL (must remain valid for lifetime of object).
+     * @param url Target URL.
+     *
+     * @warning The provided URL is stored as a non-owning view and must
+     * outlive this object.
      */
     explicit Xcurl(std::string_view url) noexcept;
 
     /**
-     * @brief default desctructor. 
+     * @brief Destructor.
      *
+     * Releases internal resources associated with the request.
      */
-     ~Xcurl();
+    ~Xcurl();
 
     /**
-     * @brief Access the internal response buffer.
+     * @brief Access the response buffer.
      *
-     * Shorthand for read_buffer().
+     * Equivalent to read_buffer().
      *
-     * @return Mutable reference to stored response data.
+     * @return Response data view.
+     *
+     * @warning The returned view becomes invalid if the internal buffer
+     * is modified or destroyed.
      */
     std::string_view operator()() noexcept;
 
     /**
-     * @brief Check if network/backend is available.
+     * @brief Check whether networking is available.
      *
-     * @return true if ready for requests.
+     * @return true if the object is ready to perform requests.
+     *
+     * @note This function does not guarantee that a remote endpoint is
+     * reachable, only that the local request backend appears available.
      */
     bool has_network() noexcept;
 
     /**
-     * @brief Perform the request and fill the buffer.
+     * @brief Execute the request.
+     *
+     * Fills the internal response buffer with fetched data.
      *
      * @return true on success, false otherwise.
+     *
+     * @warning This function modifies internal state and must not be called
+     * concurrently with other member functions on the same instance unless
+     * externally synchronized.
      */
     bool fetch_data() noexcept;
 
     /**
      * @brief Get the response buffer.
      *
-     * @return Mutable reference to internal buffer.
+     * @return Response data view.
+     *
+     * @warning The returned view refers to internal storage owned by this
+     * object. It becomes invalid when the buffer is modified or when the
+     * object is destroyed.
      */
     std::string_view read_buffer() noexcept;
 
     /**
-     * @brief Get request status code.
+     * @brief Get the cURL operation status.
      *
-     * Typically represents HTTP or internal status.
+     * @return CURLcode result of the request operation.
      */
     CURLcode status() const noexcept;
 
     /**
-     * @brief Get HTTP code.
+     * @brief Get the HTTP response code.
      *
-     * Typically represents HTTP or internal status.
+     * @return HTTP status code, or HTTP_NOT_SET if unavailable.
      */
     std::int16_t http_code() const noexcept;
 
 private:
     /**
-     * @brief Initialize internal resources.
+     * @brief Initialize internal state.
      */
     void init() noexcept;
 
-    /// Target URL (non-owning reference)
+    /// Target URL stored as a non-owning view.
     std::string_view url_;
 
-    /// Buffer holding fetched data
+    /// Response buffer owned by this object.
     std::string read_buffer_;
 
-    /// Opaque internal implementation/cache
+    /// Internal implementation details.
     struct cache;
 
-    /// Pointer to internal state
+    /// Pointer to internal state.
     std::unique_ptr<cache> cache_;
 };
 
-}
+} // namespace cwpr
 
-#endif
+#endif // XCURL_H
