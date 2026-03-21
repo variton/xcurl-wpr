@@ -11,6 +11,11 @@
 #include <string_view>
 #include <ncnm.h>
 
+#include <curl/curl.h>
+
+#define HTTP_NOT_SET -1
+#define CURLE_NO_REQ 10000
+
 namespace cwpr{
 
 /**
@@ -51,7 +56,7 @@ public:
      *
      * @return Mutable reference to stored response data.
      */
-    std::string & operator()() const noexcept;
+    std::string_view operator()() noexcept;
 
     /**
      * @brief Check if network/backend is available.
@@ -72,14 +77,21 @@ public:
      *
      * @return Mutable reference to internal buffer.
      */
-    std::string & read_buffer() const noexcept;
+    std::string_view read_buffer() noexcept;
 
     /**
      * @brief Get request status code.
      *
      * Typically represents HTTP or internal status.
      */
-    int status() noexcept;
+    CURLcode status() const noexcept;
+
+    /**
+     * @brief Get HTTP code.
+     *
+     * Typically represents HTTP or internal status.
+     */
+    std::int16_t http_code() const noexcept;
 
 private:
     /**
@@ -96,13 +108,8 @@ private:
     /// Opaque internal implementation/cache
     struct cache;
 
-    /// Custom deleter for Opaque internal implementation/cache
-    struct Deleter {
-        void operator()(cache * p) noexcept;
-    };
-
     /// Pointer to internal state
-    std::unique_ptr<cache,Deleter> cache_;
+    std::unique_ptr<cache> cache_;
 };
 
 }
