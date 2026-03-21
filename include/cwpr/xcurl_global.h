@@ -21,6 +21,14 @@ namespace cwpr {
 template <typename T>
 using Default = utils::NCNM<T>;
 
+/**
+ * @brief Concept requiring a boolean status accessor.
+ *
+ * Ensures that a type provides a `status()` member function callable on
+ * a const instance, returning `bool` and marked `noexcept`.
+ *
+ * @tparam T Type to check.
+ */
 template <typename T>
 concept HasBoolStatus = requires(const T& t) {
     { t.status() } noexcept -> std::same_as<bool>;
