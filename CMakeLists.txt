@@ -25,5 +25,8 @@ enable_testing()
 #source code
 add_subdirectory(src)
 #add_subdirectory(test)
+
+#tool for coverage
+include(Coverage)
 #tool for documentation
 include(Doxygen)

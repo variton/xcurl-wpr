@@ -13,11 +13,12 @@ target_link_libraries(test_xcurl PRIVATE
                       cwpr
                       doctest::doctest
                       fmt::fmt
-                      CURL::libcurl)
+                      CURL::libcurl
+                      $<$<CONFIG:Debug>:--coverage>)
 
 target_compile_options(test_xcurl PRIVATE
                        -Wall -Wextra -pedantic
-                       $<$<CONFIG:Debug>:-Og -g>
+                       $<$<CONFIG:Debug>:--coverage -Og -g>
                        $<$<CONFIG:Release>:-O3 -DNDEBUG>)
 
 add_test(NAME test_xcurl COMMAND $<TARGET_FILE:test_xcurl>)
@@ -41,11 +42,12 @@ target_link_libraries(test_xcurl_global PRIVATE
                       cwpr
                       doctest::doctest
                       fmt::fmt
-                      CURL::libcurl)
+                      CURL::libcurl
+                      $<$<CONFIG:Debug>:--coverage>)
 
 target_compile_options(test_xcurl_global PRIVATE
                        -Wall -Wextra -pedantic
-                       $<$<CONFIG:Debug>:-Og -g>
+                       $<$<CONFIG:Debug>:--coverage -Og -g>
                        $<$<CONFIG:Release>:-O3 -DNDEBUG>)
 
 add_test(NAME test_xcurl_global COMMAND $<TARGET_FILE:test_xcurl_global>)

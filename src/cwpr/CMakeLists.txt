@@ -3,7 +3,8 @@ add_library(cwpr SHARED
     xcurl.cpp
     xcurl_global.cpp)
 
-target_link_libraries(cwpr PRIVATE CURL::libcurl)
+target_link_libraries(cwpr PRIVATE CURL::libcurl
+                      $<$<CONFIG:Debug>:--coverage>)
 
 target_include_directories(cwpr PUBLIC
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/cwpr>
@@ -14,7 +15,7 @@ target_include_directories(cwpr PUBLIC
 
 target_compile_options(cwpr PRIVATE 
                        -Wall -Wextra -pedantic
-                       $<$<CONFIG:Debug>:-Og -g>
+                       $<$<CONFIG:Debug>:--coverage -Og -g>
                        $<$<CONFIG:Release>:-O3 -DNDEBUG>)
 
 add_subdirectory(test)
