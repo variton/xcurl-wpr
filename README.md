@@ -32,13 +32,22 @@ docker run --name=cxx-resolute --hostname=cypher -v $PWD:/home/cxx-core --net=ho
 in debug:
 
 ```
-./build-doc.sh debug
+./build.sh debug
 
 ```
 in release:
 
 ```
-./build-doc.sh release
+./build.sh release
+
+```
+
+### Use flags to trigger documentation generation and static analysis
+*remark:*
+    *the order for the flags are important still*
+
+```
+./build.sh <build_mode> -d -a
 
 ```
 
