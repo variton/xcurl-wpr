@@ -18,8 +18,7 @@ namespace cwpr {
  *
  * @tparam T Derived type using CRTP.
  */
-template <typename T>
-using Default = utils::NCNM<T>;
+template <typename T> using Default = utils::NCNM<T>;
 
 /**
  * @brief Concept requiring a boolean status accessor.
@@ -30,8 +29,8 @@ using Default = utils::NCNM<T>;
  * @tparam T Type to check.
  */
 template <typename T>
-concept HasBoolStatus = requires(const T& t) {
-    { t.status() } noexcept -> std::same_as<bool>;
+concept HasBoolStatus = requires(const T &t) {
+  { t.status() } noexcept -> std::same_as<bool>;
 };
 
 /**
@@ -45,34 +44,34 @@ concept HasBoolStatus = requires(const T& t) {
  */
 class XcurlGlobal : public Default<XcurlGlobal> {
 public:
-    /**
-     * @brief Constructs the global cURL handler.
-     *
-     * Initializes the cURL global environment.
-     */
-    XcurlGlobal() noexcept;
+  /**
+   * @brief Constructs the global cURL handler.
+   *
+   * Initializes the cURL global environment.
+   */
+  XcurlGlobal() noexcept;
 
-    /**
-     * @brief Destroys the global cURL handler.
-     *
-     * Cleans up the cURL global environment if initialization succeeded.
-     */
-    ~XcurlGlobal();
+  /**
+   * @brief Destroys the global cURL handler.
+   *
+   * Cleans up the cURL global environment if initialization succeeded.
+   */
+  ~XcurlGlobal();
 
-    /**
-     * @brief Checks whether initialization was successful.
-     *
-     * @return true if cURL was successfully initialized, false otherwise.
-     */
-    bool status() const noexcept;
+  /**
+   * @brief Checks whether initialization was successful.
+   *
+   * @return true if cURL was successfully initialized, false otherwise.
+   */
+  bool status() const noexcept;
 
 private:
-    /**
-     * @brief Initialization status flag.
-     *
-     * Indicates whether cURL global initialization succeeded.
-     */
-    bool status_;
+  /**
+   * @brief Initialization status flag.
+   *
+   * Indicates whether cURL global initialization succeeded.
+   */
+  bool status_;
 };
 
 static_assert(HasBoolStatus<XcurlGlobal>,
