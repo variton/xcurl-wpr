@@ -26,6 +26,27 @@ if(NOT fmt_FOUND)
     )
 endif()
 
+find_program(LCOV_EXECUTABLE lcov)
+find_program(GENHTML_EXECUTABLE genhtml)
+
+if(NOT LCOV_EXECUTABLE OR NOT GENHTML_EXECUTABLE)
+    message(FATAL_ERROR
+        "lcov/genhtml not found.\n"
+        "On Ubuntu, install it with:\n"
+        "  sudo apt install lcov"
+    )
+endif()
+
+find_program(GCOV_EXECUTABLE gcov)
+
+if(NOT GCOV_EXECUTABLE)
+    message(FATAL_ERROR
+        "lcov/genhtml not found.\n"
+        "On Ubuntu, install it with:\n"
+        "  sudo apt install gcov"
+    )
+endif()
+
 include(FetchContent)
 
 FetchContent_Declare(

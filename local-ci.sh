@@ -25,9 +25,14 @@ valgrind --leak-check=full ./bin/test_xcurl_global
 #launch clang formating
 clang-format -i src/**/*.cpp include/**/*.h test/*.cpp
 
-#launch test coverage
+#launch test coverage and generate html report
+cmake --build $BUILD_DIR --target coverage
 
 #launch integration tests
 
 #gather some metric
-#generate report
+
+#build documentation 
+#remark: launch from the root directory
+cmake -S . -B docs/build -G Ninja
+cmake --build docs/build --target doxygen > docs.loggenerate report
