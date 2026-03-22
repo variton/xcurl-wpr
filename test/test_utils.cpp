@@ -5,6 +5,4 @@
 
 #include <ncnm.h>
 
-TEST_CASE("Non copyble non moveable class") {
-  CHECK(true);
-}
+TEST_CASE("Non copyble non moveable class") { CHECK(true); }

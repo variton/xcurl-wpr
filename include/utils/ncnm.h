@@ -22,25 +22,24 @@ namespace utils {
  *
  * @tparam T Derived type.
  */
-template <typename T>
-class NCNM {
+template <typename T> class NCNM {
 protected:
-    /**
-     * @brief Default protected constructor.
-     */
-    NCNM() = default;
+  /**
+   * @brief Default protected constructor.
+   */
+  NCNM() = default;
 
-    /**
-     * @brief Default protected destructor.
-     */
-    ~NCNM() = default;
+  /**
+   * @brief Default protected destructor.
+   */
+  ~NCNM() = default;
 
 public:
-    NCNM(const NCNM&) = delete;            ///< Copy construction disabled.
-    NCNM& operator=(const NCNM&) = delete; ///< Copy assignment disabled.
+  NCNM(const NCNM &) = delete;            ///< Copy construction disabled.
+  NCNM &operator=(const NCNM &) = delete; ///< Copy assignment disabled.
 
-    NCNM(NCNM&&) = delete;                 ///< Move construction disabled.
-    NCNM& operator=(NCNM&&) = delete;      ///< Move assignment disabled.
+  NCNM(NCNM &&) = delete;            ///< Move construction disabled.
+  NCNM &operator=(NCNM &&) = delete; ///< Move assignment disabled.
 };
 
 } // namespace utils

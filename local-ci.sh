@@ -22,6 +22,9 @@ valgrind --leak-check=full ./bin/test_xcurl
 #run quality test for xcurl_global impl
 valgrind --leak-check=full ./bin/test_xcurl_global
 
+#launch clang formating
+clang-format -i src/**/*.cpp include/**/*.h test/*.cpp
+
 #launch test coverage
 
 #launch integration tests
