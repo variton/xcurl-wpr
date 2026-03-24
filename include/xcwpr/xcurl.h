@@ -14,7 +14,7 @@
 
 #define HTTP_NOT_SET -1
 
-namespace cwpr {
+namespace xcwpr {
 
 /**
  * @brief Alias for a non-copyable, non-movable base class.
@@ -139,6 +139,6 @@ private:
   std::unique_ptr<cache> cache_;
 };
 
-} // namespace cwpr
+} // namespace xcwpr
 
 #endif // XCURL_H

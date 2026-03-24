@@ -2,7 +2,7 @@
 #include <curl/curl.h>
 #include <xcurl_global.h>
 
-namespace cwpr {
+namespace xcwpr {
 
 XcurlGlobal::XcurlGlobal() noexcept : status_{false} {
   status_ = curl_global_init(CURL_GLOBAL_DEFAULT) == CURLE_OK;
@@ -16,4 +16,4 @@ XcurlGlobal::~XcurlGlobal() {
 
 bool XcurlGlobal::status() const noexcept { return status_; }
 
-} // namespace cwpr
+} // namespace xcwpr

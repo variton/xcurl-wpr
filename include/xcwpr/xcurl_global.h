@@ -9,7 +9,7 @@
 #include <concepts>
 #include <ncnm.h>
 
-namespace cwpr {
+namespace xcwpr {
 
 /**
  * @brief Alias for a non-copyable, non-movable base class.
@@ -77,6 +77,6 @@ private:
 static_assert(HasBoolStatus<XcurlGlobal>,
               "XcurlGlobal must provide bool status() const noexcept");
 
-} // namespace cwpr
+} // namespace xcwpr
 
 #endif // XCURL_GLOBAL_H

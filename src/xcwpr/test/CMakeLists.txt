@@ -4,13 +4,13 @@ add_executable(test_xcurl
 )
 
 target_include_directories(test_xcurl PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/cwpr>
+  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/xcwpr>
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/ret>
   $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(test_xcurl PRIVATE
-                      cwpr
+                      xcwpr
                       doctest::doctest
                       fmt::fmt
                       CURL::libcurl
@@ -33,13 +33,13 @@ add_executable(test_xcurl_global
 )
 
 target_include_directories(test_xcurl_global PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/cwpr>
+  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/xcwpr>
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/ret>
   $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(test_xcurl_global PRIVATE
-                      cwpr
+                      xcwpr
                       doctest::doctest
                       fmt::fmt
                       CURL::libcurl
