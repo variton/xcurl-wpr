@@ -22,7 +22,7 @@ CURLcode call_curl(Func func, Args &&...args) noexcept {
 
 } // namespace
 
-namespace cwpr {
+namespace xcwpr {
 
 ////start of cache
 /// implementation-------------------------------------------------------------
@@ -97,4 +97,4 @@ CURLcode Xcurl::status() const noexcept { return cache_->res_; }
 
 long Xcurl::http_code() const noexcept { return cache_->http_code_; }
 
-} // namespace cwpr
+} // namespace xcwpr

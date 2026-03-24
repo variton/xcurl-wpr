@@ -19,7 +19,7 @@ std::optional<std::string> get_env_var(const char * name){
 }
 
 TEST_CASE("Xcurl") {
-  cwpr::Xcurl xcurl{"https://httpbin.org/get"};
+  xcwpr::Xcurl xcurl{"https://httpbin.org/get"};
   // fmt::print("xcurl status -> {}\n",xcurl.status());
   CHECK(xcurl.status()==CURLE_OK);
   CHECK(xcurl.http_code() == HTTP_NOT_SET);
@@ -33,21 +33,21 @@ TEST_CASE("Xcurl") {
 //}
 
 TEST_CASE("read_buffer empty") {
-  cwpr::Xcurl xcurl{"https://httpbin.org/get"};
+  xcwpr::Xcurl xcurl{"https://httpbin.org/get"};
   CHECK(xcurl.read_buffer().empty());
   CHECK(xcurl.status() == CURLE_OK);
   CHECK(xcurl.http_code() == HTTP_NOT_SET);
 }
 
 TEST_CASE("functor [read_buffer empty]"){
-  cwpr::Xcurl xcurl{"https://httpbin.org/get"};
+  xcwpr::Xcurl xcurl{"https://httpbin.org/get"};
   CHECK(xcurl().empty());
   CHECK(xcurl.status() == CURLE_OK);
   CHECK(xcurl.http_code() == HTTP_NOT_SET);
 }
 
 TEST_CASE("read_buffer with real url") {
-  cwpr::Xcurl xcurl{"https://httpbin.org/get"};
+  xcwpr::Xcurl xcurl{"https://httpbin.org/get"};
   auto ret = xcurl.fetch_data();
   CHECK(ret); 
   CHECK(!xcurl.read_buffer().empty());
@@ -56,7 +56,7 @@ TEST_CASE("read_buffer with real url") {
 }
 
 TEST_CASE("read_buffer with fake url") {
-  cwpr::Xcurl xcurl{"https://xspectrum/get"};
+  xcwpr::Xcurl xcurl{"https://xspectrum/get"};
   auto ret = xcurl.fetch_data();
   CHECK(!ret); 
   CHECK(xcurl.read_buffer().empty());
@@ -64,7 +64,7 @@ TEST_CASE("read_buffer with fake url") {
 }
 
 TEST_CASE("read_buffer with malformat url") {
-  cwpr::Xcurl xcurl{"1Z%"};
+  xcwpr::Xcurl xcurl{"1Z%"};
   auto ret = xcurl.fetch_data();
   CHECK(!ret); 
   CHECK(xcurl.read_buffer().empty());

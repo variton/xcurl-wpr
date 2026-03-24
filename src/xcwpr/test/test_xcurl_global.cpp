@@ -5,6 +5,6 @@
 #include <xcurl_global.h>
 
 TEST_CASE("XcurlGlobal") {
-  cwpr::XcurlGlobal xcurl_global{};;
+  xcwpr::XcurlGlobal xcurl_global{};;
   CHECK(xcurl_global.status());
 }
