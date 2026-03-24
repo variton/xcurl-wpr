@@ -51,7 +51,14 @@ in release:
 
 ```
 
-## Install libxcurlwpr
+### Run the local CI
+
+```
+./local-ci.sh
+
+```
+
+## Install libxcwpr
 
 ## Generate the documentation
 *remark:*

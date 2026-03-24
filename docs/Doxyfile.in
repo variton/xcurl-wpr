@@ -6,7 +6,7 @@ PROJECT_NUMBER         = "0.0.1"
 
 # Where your sources live
 INPUT                  = "/home/cxx-core/src" \
-                         "/home/cxx-core/include/cwpr" \
+                         "/home/cxx-core/include/xcwpr" \
                          "/home/cxx-core/include/utils" \
                          "/home/cxx-core/include/ret" \
                          "/home/cxx-core/README.md" \ 
