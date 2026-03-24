@@ -21,7 +21,7 @@ The architecture is driven by three main constraints:
 
 ## 1. Separation of Concerns
 
-Functionality is divided into well-defined modules with clear interfaces.  
+Functionalities are divided into well-defined modules with clear interfaces.  
 Components shared across executables are packaged as libraries in order to maximize reuse and maintain explicit boundaries.
 
 **Trade-off**

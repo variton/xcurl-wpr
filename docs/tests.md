@@ -1,15 +1,28 @@
 # Tests {#tests}
 
 ## Run quality tests
-open a terminal and run the following command:
-    
+open a terminal & run the following command:
+
+launch test_xcurl
 ```
-todo; describe the quality test with valgrind
+valgrind --leak-check=full ./bin/test_xcurl
 
 ```
+
+launch test_xcurl_global
+```
+valgrind --leak-check=full ./bin/test_xcurl_global
+
+```
+
 ## Run the coverage tests
 
-## Run the performance tests
+cd to the root folder of the project & run the following command:
+
+```
+cmake --build $BUILD_DIR --target coverage
+
+```
 
 ## Run unit tests
 run the following commands:
@@ -26,3 +39,4 @@ in release:
 cd build/release;ctest --output-on-failure -j `nproc`
 
 ```
+## Run the performance tests

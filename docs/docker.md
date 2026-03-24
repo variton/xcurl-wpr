@@ -2,12 +2,12 @@
 
 ## Fetch the environment
 
-1. Cd in the folder where the Dockerfile is located
+1. Make sure you have the rights to pull the docker image 
 
-2. Generate the docker image
+2. Pull the docker image
 
 ```
-docker build -t igcc-u2404:1.0 .
+docker pull ghcr.io/variton/icxx-resolute:1.0
 
 ```
 
@@ -20,5 +20,6 @@ docker build -t igcc-u2404:1.0 .
 create the docker container
 
 ```
+docker run --name=cxx-resolute --hostname=cypher -v $PWD:/home/cxx-core --net=host --restart=no -it icxx-resolute:1.0 /bin/bash
 
 ```
