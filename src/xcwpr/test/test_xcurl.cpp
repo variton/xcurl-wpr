@@ -2,21 +2,21 @@
 
 #include <doctest/doctest.h>
 
-#include <cstdlib>
-#include <string>
-#include <optional>
-
 #include <xcurl.h>
 #include <curl/curl.h>
 
 #include <fmt/core.h>
 
-std::optional<std::string> get_env_var(const char * name){
-  if (const char * rc = std::getenv(name)) {
-    return std::string {rc};
-  } 
-  return std::nullopt;
-}
+// #include <optional>
+// #include <string>
+// #include <cstdlib>
+
+// std::optional<std::string> get_env_var(const char * name){
+//   if (const char * rc = std::getenv(name)) {
+//     return std::string {rc};
+//   } 
+//   return std::nullopt;
+// }
 
 TEST_CASE("Xcurl") {
   xcwpr::Xcurl xcurl{"https://httpbin.org/get"};
