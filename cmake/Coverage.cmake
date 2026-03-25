@@ -27,7 +27,7 @@ if(LCOV_EXECUTABLE AND GENHTML_EXECUTABLE)
         # Optional: remove a few leftovers if your tree has vendored code under src/
         COMMAND ${LCOV_EXECUTABLE}
         --remove coverage.info
-        '*/tests/*'
+        #'*/tests/*'
         '*/external/*'
         '*/_deps/*'
         '*/doctest/*'

@@ -1,13 +1,5 @@
 #!/usr/bin/bash
 
-#format
-# find . \
-#   -type f \( -name "*.p" -o -name "*.h" \) \
-#   -not -path "./build/*" \
-#   -not -path "./.git/*" \
-#   -not -path "./third_party/*" \
-#   -exec clang-format -i {} +
-
 BUILD_DIR="build/debug"
 #launch test if test-xcurl exits
 
@@ -17,10 +9,15 @@ ctest --output-on-failure -j `nproc`
 
 #launch quality tests
 cd $LAB 
+
 #run quality test for xcurl impl
 valgrind --leak-check=full ./bin/test_xcurl
+
 #run quality test for xcurl_global impl
 valgrind --leak-check=full ./bin/test_xcurl_global
+
+#run quality test for test_utils
+valgrind --leak-check=full ./bin/test_utils
 
 #launch clang formating
 clang-format -i src/**/*.cpp include/**/*.h test/*.cpp

@@ -7,9 +7,12 @@ target_include_directories(test_utils PUBLIC
   $<INSTALL_INTERFACE:include>
 )
 
+target_link_options(test_utils PRIVATE
+                    $<$<CONFIG:Debug>:--coverage>)
+
 target_compile_options(test_utils PRIVATE 
                        -Wall -Wextra -pedantic
-                       $<$<CONFIG:Debug>:-Og -g>
+                       $<$<CONFIG:Debug>:--coverage -Og -g>
                        $<$<CONFIG:Release>:-O3 -DNDEBUG>)
 
 add_test(NAME test_utils COMMAND $<TARGET_FILE:test_utils>)
