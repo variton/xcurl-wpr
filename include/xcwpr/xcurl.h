@@ -14,7 +14,8 @@
 
 #define HTTP_NOT_SET -1
 
-namespace xcwpr {
+namespace xcwpr
+{
 
 /**
  * @brief Alias for a non-copyable, non-movable base class.
@@ -23,7 +24,8 @@ namespace xcwpr {
  *
  * @tparam T Derived type.
  */
-template <typename T> using Default = utils::NCNM<T>;
+template <typename T>
+using Default = utils::NCNM<T>;
 
 /**
  * @brief Simple RAII wrapper for performing HTTP requests using cURL.
@@ -41,7 +43,8 @@ template <typename T> using Default = utils::NCNM<T>;
  * @note Using libcurl typically requires global initialization with
  * curl_global_init() before creating request handles.
  */
-class Xcurl : public Default<Xcurl> {
+class Xcurl : public Default<Xcurl>
+{
 public:
   /**
    * @brief Construct a request for the given URL.

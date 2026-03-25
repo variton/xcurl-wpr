@@ -22,6 +22,7 @@ if(LCOV_EXECUTABLE AND GENHTML_EXECUTABLE)
         COMMAND ${LCOV_EXECUTABLE}
         --extract coverage.raw.info
         "${CMAKE_SOURCE_DIR}/src/*"
+        "${CMAKE_SOURCE_DIR}/test/*"
         --output-file coverage.info
 
         # Optional: remove a few leftovers if your tree has vendored code under src/

@@ -9,7 +9,8 @@
 #include <concepts>
 #include <type_traits>
 
-namespace utils {
+namespace utils
+{
 
 /**
  * @brief Non-copyable, non-movable CRTP base class.
@@ -25,7 +26,9 @@ namespace utils {
  *
  * @tparam T Derived type.
  */
-template <typename T> class NCNM {
+template <typename T>
+class NCNM
+{
 protected:
   /**
    * @brief Default protected constructor.
@@ -69,8 +72,8 @@ public:
  */
 template <typename T>
 concept NonCopyableNonMovable =
-    !std::is_copy_constructible_v<T> && !std::is_copy_assignable_v<T> &&
-    !std::is_move_constructible_v<T> && !std::is_move_assignable_v<T>;
+  !std::is_copy_constructible_v<T> && !std::is_copy_assignable_v<T> &&
+  !std::is_move_constructible_v<T> && !std::is_move_assignable_v<T>;
 
 } // namespace utils
 

@@ -19,6 +19,9 @@ valgrind --leak-check=full ./bin/test_xcurl_global
 #run quality test for test_utils
 valgrind --leak-check=full ./bin/test_utils
 
+#run quality test for test_xcgen
+valgrind --leak-check=full ./bin/test_xcgen
+
 #launch clang formating
 clang-format -i src/**/*.cpp include/**/*.h test/*.cpp
 
@@ -32,4 +35,4 @@ cmake --build $BUILD_DIR --target coverage
 #build documentation 
 #remark: launch from the root directory
 cmake -S . -B docs/build -G Ninja
-cmake --build docs/build --target doxygen > docs.loggenerate report
+cmake --build docs/build --target doxygen > docs.loggenerate
