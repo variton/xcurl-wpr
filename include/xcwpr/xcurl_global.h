@@ -9,7 +9,8 @@
 #include <concepts>
 #include <ncnm.h>
 
-namespace xcwpr {
+namespace xcwpr
+{
 
 /**
  * @brief Alias for a non-copyable, non-movable base class.
@@ -18,7 +19,8 @@ namespace xcwpr {
  *
  * @tparam T Derived type using CRTP.
  */
-template <typename T> using Default = utils::NCNM<T>;
+template <typename T>
+using Default = utils::NCNM<T>;
 
 /**
  * @brief Concept requiring a boolean status accessor.
@@ -42,7 +44,8 @@ concept HasBoolStatus = requires(const T &t) {
  *
  * Copy and move operations are disabled via Default.
  */
-class XcurlGlobal : public Default<XcurlGlobal> {
+class XcurlGlobal : public Default<XcurlGlobal>
+{
 public:
   /**
    * @brief Constructs the global cURL handler.
@@ -74,8 +77,10 @@ private:
   bool status_;
 };
 
-static_assert(HasBoolStatus<XcurlGlobal>,
-              "XcurlGlobal must provide bool status() const noexcept");
+static_assert(
+  HasBoolStatus<XcurlGlobal>,
+  "XcurlGlobal must provide bool status() const noexcept"
+);
 
 } // namespace xcwpr
 

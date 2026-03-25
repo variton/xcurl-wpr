@@ -24,7 +24,7 @@ file(GLOB SOURCES "src/*.cpp")
 enable_testing()
 #source code
 add_subdirectory(src)
-#add_subdirectory(test)
+add_subdirectory(test)
 
 #tool for coverage
 include(Coverage)
