@@ -8,6 +8,8 @@ if [[ "${1:-}" == "release" ]]; then
   BUILD_TYPE="Release"
   BUILD_DIR="build/release"
 elif [[ "${1:-}" == "debug" ]]; then
+  find $BUILD_DIR -name '*.gcda' -delete
+  find $BUILD_DIR -name '*.gcno' -delete 
   echo "Default build config"
 elif [[ "${1:-}" == "clean-debug" ]]; then
   echo "Removing debug build"
