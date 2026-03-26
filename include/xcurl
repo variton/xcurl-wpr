@@ -1,0 +1,9 @@
+
+#ifndef XCURL
+#define XCURL
+
+#include <xcurl.h>
+#include <xcurl_global.h>
+#include <xcurl_ctx.h>
+
+#endif
