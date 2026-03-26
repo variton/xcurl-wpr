@@ -28,6 +28,7 @@ add_executable(test_xcgen
 )
 
 target_include_directories(test_xcgen PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}>
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/utils>
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/xcwpr>
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/xcgen>
