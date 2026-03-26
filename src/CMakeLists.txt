@@ -1,2 +1,2 @@
 add_subdirectory(xcwpr)
-#add_subdirectory(crawler)
+add_subdirectory(crawler)
