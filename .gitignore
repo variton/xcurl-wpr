@@ -8,3 +8,4 @@ bin/
 docs/build
 clang.analysis
 docs.loggenerate
+perf.data

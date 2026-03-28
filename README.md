@@ -24,7 +24,25 @@ docker pull ghcr.io/variton/icxx-resolute:1.0
 ## Create the docker container env to develop the xcurl-wpr
 
 ```
-docker run --name=cxx-resolute --hostname=cypher -v $PWD:/home/cxx-core --net=host --restart=no -it icxx-resolute:1.0 /bin/bash
+docker run --name=cxx-resolute \
+  --hostname=cypher \
+  -v $PWD:/home/cxx-core \
+  --net=host \
+  --restart=no \
+  -it ghcr.io/variton/icxx-resolute:1.0 /bin/bash
+```
+
+## Create a docker container to generate performance metrics
+
+```
+docker run --cap-add PERFMON \
+  --security-opt seccomp=unconfined \
+  --name=cxx-resolute-metric \
+  --hostname=cypher \
+  -v $PWD:/home/cxx-core \
+  --net=host \
+  --restart=no \
+  -it ghcr.io/variton/icxx-resolute:1.0 /bin/bash
 
 ```
 
