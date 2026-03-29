@@ -83,10 +83,10 @@ bool Xcurl::fetch_data() noexcept
 {
   if (!cache_ || !cache_->curl_)
     return false;
- 
-  // for debugging purposes 
-  // cache_->res_ = ::call_curl(curl_easy_setopt, cache_->curl_,  CURLOPT_VERBOSE, 1L); 
-  // if (cache_->res_ != CURLE_OK)
+
+  // for debugging purposes
+  // cache_->res_ = ::call_curl(curl_easy_setopt, cache_->curl_,
+  // CURLOPT_VERBOSE, 1L); if (cache_->res_ != CURLE_OK)
   //   return false;
 
   cache_->res_ = ::call_curl(
