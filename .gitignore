@@ -9,3 +9,4 @@ docs/build
 clang.analysis
 docs.loggenerate
 perf.data
+docs/valgrind-report.html

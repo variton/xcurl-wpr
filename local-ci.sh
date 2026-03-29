@@ -10,17 +10,32 @@ ctest --output-on-failure -j `nproc`
 #launch quality tests
 cd $LAB 
 
-#run quality test for xcurl impl
-valgrind --leak-check=full ./bin/test_xcurl
+#run quality test for all tests in bin
+REPORT_DIR="valgrind-reports"
+mkdir -p "$REPORT_DIR"
 
-#run quality test for xcurl_global impl
-valgrind --leak-check=full ./bin/test_xcurl_global
+counter=1
 
-#run quality test for test_utils
-valgrind --leak-check=full ./bin/test_utils
+for file in ./bin/test_*; do
+  if [[ -x "$file" && -f "$file" ]]; then
+    name=$(basename "$file")
+    report_file="$REPORT_DIR/report_${counter}_${name}.xml"
 
-#run quality test for test_xcgen
-valgrind --leak-check=full ./bin/test_xcgen
+    echo "Running $name..."
+    valgrind --leak-check=full \
+             --xml=yes \
+             --xml-file="$report_file" \
+             "$file"
+
+    echo "Report saved to $report_file"
+    echo "-----------------------------------"
+
+    ((counter++))
+  fi
+done
+
+#generate the html report
+python3 tools/valgrind-report-maker.py valgrind-reports -o docs/valgrind-report.html
 
 #launch clang formating
 clang-format -i src/**/*.cpp include/**/*.h test/*.cpp
@@ -36,3 +51,6 @@ cmake --build $BUILD_DIR --target coverage
 #remark: launch from the root directory
 cmake -S . -B docs/build -G Ninja
 cmake --build docs/build --target doxygen > docs.loggenerate
+
+#get rid of valgrind xml reports
+rm -rf valgrind-reports
