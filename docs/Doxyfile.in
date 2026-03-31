@@ -14,6 +14,7 @@ INPUT                  = "/home/cxx-core/src" \
                          "/home/cxx-core/docs/build.md" \
                          "/home/cxx-core/docs/docker.md" \
                          "/home/cxx-core/docs/cli.md" \
+                         "/home/cxx-core/docs/design.md" \
                          "/home/cxx-core/docs/tests.md" 
 
 RECURSIVE              = YES
