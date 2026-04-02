@@ -6,8 +6,8 @@
 #ifndef XCURL_GLOBAL_H
 #define XCURL_GLOBAL_H
 
-#include <concepts>
 #include <ncnm.h>
+#include <xcwpr_concepts.h>
 
 namespace xcwpr
 {
@@ -21,19 +21,6 @@ namespace xcwpr
  */
 template <typename T>
 using Default = utils::NCNM<T>;
-
-/**
- * @brief Concept requiring a boolean status accessor.
- *
- * Ensures that a type provides a `status()` member function callable on
- * a const instance, returning `bool` and marked `noexcept`.
- *
- * @tparam T Type to check.
- */
-template <typename T>
-concept HasBoolStatus = requires(const T &t) {
-  { t.status() } noexcept -> std::same_as<bool>;
-};
 
 /**
  * @brief RAII wrapper for global cURL initialization and cleanup.
