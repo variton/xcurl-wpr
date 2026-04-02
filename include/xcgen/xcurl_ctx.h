@@ -9,6 +9,7 @@
 
 #include <ncnm.h>
 #include <xcgen_concepts.h>
+#include <xcwpr_concepts.h>
 
 /**
  * @namespace xcgen
@@ -39,7 +40,9 @@ using Default = utils::NCNM<T>;
  * @tparam Ctx        The context type associated with the client.
  */
 template <typename Client, typename ClientArg, typename Ctx>
-  requires xcurl_topology<Client> && client_arg_topology<ClientArg>
+  requires xcurl_topology<Client> && 
+  client_arg_topology<ClientArg> &&
+  xcwpr::HasBoolStatus<Ctx>
 class XcurlCtx
 {
 public:
