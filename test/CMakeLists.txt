@@ -4,6 +4,7 @@ add_executable(test_utils
 
 target_include_directories(test_utils PUBLIC
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/utils>
+  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/topology>
   $<INSTALL_INTERFACE:include>
 )
 
