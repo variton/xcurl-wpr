@@ -8,8 +8,8 @@
 #define XCURL_CTX_H
 
 #include <ncnm.h>
-#include <xcgen_concepts.h>
-#include <xcwpr_concepts.h>
+#include <xcgen>
+#include <xcwpr>
 
 /**
  * @namespace xcgen
@@ -40,9 +40,9 @@ using Default = utils::NCNM<T>;
  * @tparam Ctx        The context type associated with the client.
  */
 template <typename Client, typename ClientArg, typename Ctx>
-  requires xcurl_topology<Client> && 
-  client_arg_topology<ClientArg> &&
-  xcwpr::HasBoolStatus<Ctx>
+  requires topology::xcgen::XcurlTy<Client> && 
+  topology::xcgen::ClientArgTy<ClientArg> &&
+  topology::xcwpr::HasBoolStatus<Ctx>
 class XcurlCtx
 {
 public:

@@ -1,5 +1,5 @@
-#ifndef XCGEN_CONCEPTS_H
-#define XCGEN_CONCEPTS_H
+#ifndef XCGEN
+#define XCGEN
 
 #include <concepts>
 #include <cstddef>
@@ -7,17 +7,11 @@
 #include <string_view>
 #include <curl/curl.h>
 
-/**
- * @file concepts.h
- * @brief Defines concept constraints for xcgen client types and client argument
- * types.
- */
-
-namespace xcgen
+namespace topology::xcgen
 {
 
 /**
- * @concept client_arg_topology
+ * @concept ClientArgTy [Client Arg Topology]
  * @brief Concept for character-buffer argument types.
  *
  * Models a string-like or buffer-like object that exposes raw character data
@@ -32,13 +26,13 @@ namespace xcgen
  * @tparam T The type being constrained.
  */
 template <typename T>
-concept client_arg_topology = requires(const T &t) {
+concept ClientArgTy = requires(const T &t) {
   { t.data() } -> std::convertible_to<const char *>;
   { t.size() } -> std::convertible_to<std::size_t>;
 };
 
 /**
- * @concept xcurl_topology
+ * @concept XcurlTy [Xcurl Topology]
  * @brief Concept for xcgen-compatible client implementations.
  *
  * This concept describes the required interface for a client type used by
@@ -74,7 +68,7 @@ concept client_arg_topology = requires(const T &t) {
  * @tparam T The type being constrained.
  */
 template <typename T>
-concept xcurl_topology =
+concept XcurlTy =
   requires(const std::string &url) { T{url}; } && requires(T t) {
     { t() } noexcept -> std::same_as<std::string_view>;
     { t.has_network() } noexcept -> std::same_as<bool>;
@@ -87,4 +81,4 @@ concept xcurl_topology =
 
 } // namespace xcgen
 
-#endif // XCGEN_CONCEPTS_H
+#endif // XCGEN

@@ -7,7 +7,7 @@
 #define XCURL_GLOBAL_H
 
 #include <ncnm.h>
-#include <xcwpr_concepts.h>
+#include <xcwpr>
 
 namespace xcwpr
 {
@@ -65,7 +65,7 @@ private:
 };
 
 static_assert(
-  HasBoolStatus<XcurlGlobal>,
+  topology::xcwpr::HasBoolStatus<XcurlGlobal>,
   "XcurlGlobal must provide bool status() const noexcept"
 );
 

@@ -1,10 +1,10 @@
 
-#ifndef XCWPR_CONCEPTS_H
-#define XCWPR_CONCEPTS_H
+#ifndef XCWPR
+#define XCWPR
 
 #include <concepts>
 
-namespace xcwpr
+namespace topology::xcwpr 
 {
 
 /**
@@ -22,4 +22,4 @@ concept HasBoolStatus = requires(const T &t) {
 
 } // namespace xcwpr
 
-#endif // XCWPR_CONCEPTS_H
+#endif // XCWPR

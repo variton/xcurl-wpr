@@ -6,6 +6,7 @@ add_library(xcwpr SHARED
 target_link_libraries(xcwpr PRIVATE CURL::libcurl)
 
 target_include_directories(xcwpr PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/topology>
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/xcwpr>
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/ret>
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/utils>
