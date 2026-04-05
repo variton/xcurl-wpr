@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <rapidjson/document.h>
 #include <string>
+#include <json_hdr.h>
 
 using Xcurl_ctx = xcgen::XcurlCtx<xcwpr::Xcurl, 
                                   std::string, 
@@ -33,20 +34,21 @@ int main(int argc,char ** argv){
     }
 
     auto response = cctx->read_buffer();
-    
-    rapidjson::Document doc;
-    doc.Parse(response.data());
+   
+    auto res = json::JsonHdr{}.parse(response.data());
 
-    if (doc.HasParseError()) {
-      fmt::print("Parse error\n");
+    //todo this part needs to be improved
+    if (res){
+      auto host = (*res.value())["headers"]["Host"].GetString();
+      auto origin = (*res.value())["origin"].GetString();
+      fmt::print("Host: {}\n",host);
+      fmt::print("Origin: {}\n",origin);
+    }
+    else{
+      fmt::print("{}",res.error().message);
       return EXIT_FAILURE;
     }
-
-    auto host = doc["headers"]["Host"].GetString();
-    auto origin = doc["origin"].GetString();
-
-    fmt::print("Host: {}\n",host);
-    fmt::print("Origin: {}\n",origin);
   }
+
   return EXIT_SUCCESS;
 }
