@@ -107,12 +107,18 @@ Execute the following cli:
 - clang-tidy
 - run-clang-tidy
 - scan-build
+- spdlog
+- curl 8.18.0
 
 #### Libraries
 
-- spdlog [libspdlog1.15]
+- libspdlog1.15
 - doctest 0.24.2-1
-- curl 8.18.0
+- libcurl4
+- libexpected-dev
+- libcurl4-openssl-dev
+- libfmt-dev
+- rapidjson-dev
 
 ### Documentation
 
