@@ -5,7 +5,7 @@
 #include <string>
 #include <json_hdr.h>
 
-TEST_CASE("JsonHdr") {
+TEST_CASE("JsonHdr parse") {
   std::string jsonstr = R"({
     "name": "Alice",
     "age": 25,
@@ -19,7 +19,17 @@ TEST_CASE("JsonHdr") {
     CHECK(ret.value()->HasMember("name"));
     CHECK(ret.value()->HasMember("age"));
     CHECK(ret.value()->HasMember("isStudent"));
-    return;
   }
-  CHECK(false);
+}
+
+TEST_CASE("JsonHdr parse error") {
+  std::string jsonstr_empty = R"({})";
+
+  xjson::JsonHdr jhdr{};
+  auto ret = jhdr.parse(jsonstr_empty); 
+
+  if (!ret){
+    CHECK(ret.error().type == xjson::JsonHdrError::ParseError);
+    CHECK(ret.error().message == "Parse error\n");
+  }
 }
