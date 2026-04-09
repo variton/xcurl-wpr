@@ -35,7 +35,7 @@ int main(int argc,char ** argv){
 
     auto response = cctx->read_buffer();
    
-    auto res = json::JsonHdr{}.parse(response.data());
+    auto res = xjson::JsonHdr{}.parse(response.data());
 
     //todo this part needs to be improved
     if (res){
