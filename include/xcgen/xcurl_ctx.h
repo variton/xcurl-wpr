@@ -40,9 +40,9 @@ using Default = utils::NCNM<T>;
  * @tparam Ctx        The context type associated with the client.
  */
 template <typename Client, typename ClientArg, typename Ctx>
-  requires topology::xcgen::XcurlTy<Client> && 
-  topology::xcgen::ClientArgTy<ClientArg> &&
-  topology::xcwpr::HasBoolStatus<Ctx>
+  requires topology::xcgen::XcurlTy<Client> &&
+           topology::xcgen::ClientArgTy<ClientArg> &&
+           topology::xcwpr::HasBoolStatus<Ctx>
 class XcurlCtx
 {
 public:
