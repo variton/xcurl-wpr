@@ -5,7 +5,7 @@ add_executable(api_crawler
 
 target_include_directories(api_crawler PUBLIC
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/>
-  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/json>
+  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/xjson>
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/xcwpr>
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/xcgen>
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/tpp>
@@ -13,6 +13,7 @@ target_include_directories(api_crawler PUBLIC
 )
 
 target_link_libraries(api_crawler PRIVATE 
+                      xjson
                       xcwpr
                       fmt::fmt)
 
