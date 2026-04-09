@@ -8,7 +8,8 @@
 #include <string>
 #include <string_view>
 
-namespace xjson {
+namespace xjson
+{
 
 /**
  * @brief Alias for a non-copyable, non-movable base class.
@@ -25,17 +26,19 @@ using Default = utils::NCNM<T>;
  * @enum JsonHdrError
  * @brief Enumerates possible errors during JSON parsing.
  */
-enum class JsonHdrError {
-    ParseError  ///< Indicates a JSON parsing failure.
+enum class JsonHdrError
+{
+  ParseError ///< Indicates a JSON parsing failure.
 };
 
 /**
  * @struct JsonErrorInfo
  * @brief Contains detailed information about a JSON parsing error.
  */
-struct JsonErrorInfo {
-    JsonHdrError type;   ///< Type of error.
-    std::string message; ///< Human-readable error message.
+struct JsonErrorInfo
+{
+  JsonHdrError type;   ///< Type of error.
+  std::string message; ///< Human-readable error message.
 };
 
 /**
@@ -47,39 +50,40 @@ struct JsonErrorInfo {
  *
  * @note This class is non-copyable and non-movable.
  */
-class JsonHdr : public Default<JsonHdr> {
+class JsonHdr : public Default<JsonHdr>
+{
 public:
+  /**
+   * @brief Default constructor.
+   */
+  JsonHdr();
 
-    /**
-     * @brief Default constructor.
-     */
-    JsonHdr();
+  /**
+   * @brief Default destructor.
+   */
+  ~JsonHdr();
 
-    /**
-     * @brief Default destructor.
-     */
-    ~JsonHdr();
-
-    /**
-     * @brief Parses a JSON string into a RapidJSON document.
-     *
-     * @param json_obj A string view containing the JSON text.
-     *
-     * @return tl::expected containing:
-     * - Pointer to the parsed `rapidjson::Document` on success
-     * - `JsonErrorInfo` on failure
-     *
-     * @retval success Returns pointer to internal document.
-     * @retval failure Returns error info with type `JsonHdrError::ParseError`.
-     *
-     * @note The returned pointer is valid as long as the `JsonHdr` instance exists.
-     * @warning The input must be valid JSON; otherwise parsing will fail.
-     */
-    tl::expected<rapidjson::Document*, JsonErrorInfo>
-    parse(std::string_view json_obj) noexcept; 
+  /**
+   * @brief Parses a JSON string into a RapidJSON document.
+   *
+   * @param json_obj A string view containing the JSON text.
+   *
+   * @return tl::expected containing:
+   * - Pointer to the parsed `rapidjson::Document` on success
+   * - `JsonErrorInfo` on failure
+   *
+   * @retval success Returns pointer to internal document.
+   * @retval failure Returns error info with type `JsonHdrError::ParseError`.
+   *
+   * @note The returned pointer is valid as long as the `JsonHdr` instance
+   * exists.
+   * @warning The input must be valid JSON; otherwise parsing will fail.
+   */
+  tl::expected<rapidjson::Document *, JsonErrorInfo>
+  parse(std::string_view json_obj) noexcept;
 
 private:
-    rapidjson::Document doc_; ///< Internal RapidJSON document storage.
+  rapidjson::Document doc_; ///< Internal RapidJSON document storage.
 };
 
 } // namespace xjson
