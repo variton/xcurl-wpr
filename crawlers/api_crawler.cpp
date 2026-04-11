@@ -39,8 +39,8 @@ int main(int argc,char ** argv){
 
     //todo this part needs to be improved
     if (res){
-      auto host = (*res.value())["headers"]["Host"].GetString();
-      auto origin = (*res.value())["origin"].GetString();
+      auto host = res.value().get()["headers"]["Host"].GetString();
+      auto origin = res.value().get()["origin"].GetString();
       fmt::print("Host: {}\n",host);
       fmt::print("Origin: {}\n",origin);
     }

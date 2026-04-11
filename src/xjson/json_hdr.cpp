@@ -1,3 +1,4 @@
+
 #include <json_hdr.h>
 
 namespace xjson
@@ -7,7 +8,7 @@ JsonHdr::JsonHdr() = default;
 
 JsonHdr::~JsonHdr() = default;
 
-tl::expected<rapidjson::Document *, JsonErrorInfo>
+tl::expected<std::reference_wrapper<const rapidjson::Document>, JsonErrorInfo>
 JsonHdr::parse(std::string_view json_obj) noexcept
 {
   doc_.Parse(json_obj.data());
@@ -18,7 +19,7 @@ JsonHdr::parse(std::string_view json_obj) noexcept
     );
   }
 
-  return &doc_;
+  return std::cref(doc_);
 }
 
 } // namespace xjson

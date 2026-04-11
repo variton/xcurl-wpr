@@ -3,6 +3,7 @@
 #define JSON_HDR_H
 
 #include <ncnm.h>
+#include <functional>
 #include <rapidjson/document.h>
 #include <tl/expected.hpp>
 #include <string>
@@ -79,7 +80,7 @@ public:
    * exists.
    * @warning The input must be valid JSON; otherwise parsing will fail.
    */
-  tl::expected<rapidjson::Document *, JsonErrorInfo>
+  tl::expected<std::reference_wrapper<const rapidjson::Document>, JsonErrorInfo>
   parse(std::string_view json_obj) noexcept;
 
 private:
