@@ -3,20 +3,22 @@
 #include <tuple>
 #include <string>
 
-using UResponse = std::tuple<std::string,std::string>;
+namespace ret{
 
-template <typename Jhdr,typename JhdrError>
-ResponseHdr<Jhdr,JhdrError>::ResponseHdr() noexcept
+template <typename Jhdr,typename JhdrError,typename Response>
+ResponseHdr<Jhdr,JhdrError,Response>::ResponseHdr() noexcept
   :jhdr_{}{
   }
  
 template <>
-template <>
-tl::expected<UResponse,JsonHdrError>
-ResponseHdr<JsonHdr, JsonHdrError>::get_data<UResponse>(std::string_view json_obj) noexcept {
+tl::expected<UResponse,xjson::JsonErrorInfo>
+ResponseHdr<xjson::JsonHdr,xjson::JsonErrorInfo,UResponse>::get_data(std::string_view json_obj) noexcept {
   auto res = jhdr_.parse(json_obj);
   if(!res) return tl::unexpected(res.error());
-  auto host = (*res.value())["headers"]["Host"].GetString();
-  auto origin = (*res.value())["origin"].GetString();
-  return UResponse{host,origin};
+  const auto & doc = res.value().get();
+  auto host = doc["oblivion"]["host"].GetString();
+  auto port = doc["oblivion"]["port"].GetInt();
+  return std::make_tuple(host,port);
+}
+
 }
