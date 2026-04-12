@@ -11,6 +11,8 @@
 namespace ret
 {
 
+using UResponse = std::tuple<std::string,int>;
+
 /**
  * @brief Alias for a non-copyable, non-movable base class.
  *
@@ -21,14 +23,13 @@ namespace ret
 template <typename T>
 using Default = utils::NCNM<T>;
 
-template <typename Jhdr, typename JhdrError>
-class ResponseHdr : public Default<ResponseHdr<Jhdr, JhdrError>>
+template <typename Jhdr, typename JhdrError,typename Response>
+class ResponseHdr : public Default<ResponseHdr<Jhdr, JhdrError,Response>>
 {
 
 public:
   ResponseHdr() noexcept;
 
-  template <typename Response>
   tl::expected<Response, JhdrError>
   get_data(std::string_view json_obj) noexcept;
 
@@ -36,6 +37,7 @@ private:
   Jhdr jhdr_;
 };
 
+} // namespace ret
 #include "response_hdr.tpp"
 
 #endif
