@@ -56,32 +56,33 @@ set_tests_properties(test_xcgen PROPERTIES
 
 #==================================================================
 
-add_executable(test_response_hdr
-    test_response_hdr.cpp
+add_executable(test_ret
+    test_ret.cpp
 )
 
-target_include_directories(test_response_hdr PUBLIC
+target_include_directories(test_ret PUBLIC
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}>
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/xjson>
+  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/platform>
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/ret>
   $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/tpp>
   $<INSTALL_INTERFACE:include>
 )
 
 
-target_link_libraries(test_response_hdr PRIVATE xjson)
+target_link_libraries(test_ret PRIVATE xjson)
 
-target_link_options(test_response_hdr PRIVATE
+target_link_options(test_ret PRIVATE
                     $<$<CONFIG:Debug>:--coverage>)
 
-target_compile_options(test_response_hdr PRIVATE
+target_compile_options(test_ret PRIVATE
                        -Wall -Wextra -pedantic
                        $<$<CONFIG:Debug>:--coverage -Og -g>
                        $<$<CONFIG:Release>:-O3 -DNDEBUG>)
 
-add_test(NAME test_response_hdr COMMAND $<TARGET_FILE:test_response_hdr>)
+add_test(NAME test_ret COMMAND $<TARGET_FILE:test_ret>)
 
-set_tests_properties(test_response_hdr PROPERTIES
+set_tests_properties(test_ret PROPERTIES
   ENVIRONMENT "RC=${TRC}"
 )
 

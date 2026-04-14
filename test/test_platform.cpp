@@ -5,7 +5,7 @@
 
 #include <env_mgr.h>
 
-TEST_CASE("Get_env_var")
+TEST_CASE("EnvMgr get_env_var")
 {
   auto rc = platform::EnvMgr::get_instance().get_env_var("RC");
   if (rc) {
@@ -13,7 +13,7 @@ TEST_CASE("Get_env_var")
   }
 }
 
-TEST_CASE("Get_env_var fail")
+TEST_CASE("EnvMgr get_env_var fail")
 {
   auto rc = platform::EnvMgr::get_instance().get_env_var("X");
   if (!rc) {

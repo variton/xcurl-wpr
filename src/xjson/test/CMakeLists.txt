@@ -4,7 +4,8 @@ add_executable(test_json_hdr
 )
 
 target_include_directories(test_json_hdr PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/json>
+  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/xjson>
+  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/platform>
   $<INSTALL_INTERFACE:include>
 )
 
