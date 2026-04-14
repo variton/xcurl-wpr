@@ -84,3 +84,33 @@ add_test(NAME test_response_hdr COMMAND $<TARGET_FILE:test_response_hdr>)
 set_tests_properties(test_response_hdr PROPERTIES
   ENVIRONMENT "RC=${TRC}"
 )
+
+#==================================================================
+
+add_executable(test_platform
+    test_platform.cpp
+)
+
+target_include_directories(test_platform PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}>
+  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/utils>
+  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/platform>
+  $<INSTALL_INTERFACE:include>
+)
+
+
+#target_link_libraries(test_platform PRIVATE fmt)
+
+target_link_options(test_platform PRIVATE
+                    $<$<CONFIG:Debug>:--coverage>)
+
+target_compile_options(test_platform PRIVATE
+                       -Wall -Wextra -pedantic
+                       $<$<CONFIG:Debug>:--coverage -Og -g>
+                       $<$<CONFIG:Release>:-O3 -DNDEBUG>)
+
+add_test(NAME test_platform COMMAND $<TARGET_FILE:test_platform>)
+
+set_tests_properties(test_platform PROPERTIES
+  ENVIRONMENT "RC=${TRC}"
+)
