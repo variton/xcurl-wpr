@@ -6,6 +6,7 @@
 #include <string>
 #include <cstdlib>
 #include <ncnm.h>
+#include <tl/expected.hpp>
 
 namespace platform
 {
@@ -19,6 +20,18 @@ namespace platform
  */
 template <typename T>
 using Default = utils::NCNM<T>;
+
+enum class EnvMgrError
+{
+  NoEnvVar,
+  InvalidEnvVarType,
+};
+
+struct EnvMgrErrorInfo
+{
+  EnvMgrError type;
+  std::string message;
+};
 
 // todo change optional with expected & add documentation
 class EnvMgr : public Default<EnvMgr>
@@ -36,6 +49,16 @@ public:
       return std::string{rc};
     }
     return std::nullopt;
+  }
+
+  tl::expected<std::string, EnvMgrErrorInfo> get_envv(const char *name)
+  {
+    if (const char *rc = std::getenv(name)) {
+      return std::string{rc};
+    }
+    return tl::unexpected(
+      EnvMgrErrorInfo{EnvMgrError::NoEnvVar, "No env var found\n"}
+    );
   }
 
 private:
