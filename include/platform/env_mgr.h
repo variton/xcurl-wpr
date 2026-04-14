@@ -20,6 +20,7 @@ namespace platform
 template <typename T>
 using Default = utils::NCNM<T>;
 
+// todo change optional with expected & add documentation
 class EnvMgr : public Default<EnvMgr>
 {
 public:

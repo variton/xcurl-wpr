@@ -3,25 +3,16 @@
 
 #include <doctest/doctest.h>
 
-#include <optional>
 #include <string>
-#include <cstdlib>
 #include <fstream>
 #include <sstream>
 
+#include <env_mgr.h>
 #include <json_hdr.h>
 #include <response_hdr.h>
 
 using Response =
   ret::ResponseHdr<xjson::JsonHdr, xjson::JsonErrorInfo, ret::UResponse>;
-
-std::optional<std::string> get_env_var(const char *name)
-{
-  if (const char *rc = std::getenv(name)) {
-    return std::string{rc};
-  }
-  return std::nullopt;
-}
 
 std::string read_file(const std::string &path)
 {
@@ -42,7 +33,8 @@ TEST_CASE("ResponseHdr")
 
 TEST_CASE("ResponseHdr get_data")
 {
-  auto rc = get_env_var("RC");
+  auto &local = platform::EnvMgr::get_instance();
+  auto rc = local.get_env_var("RC");
   if (rc) {
     std::string filepath = *rc + "/sample.json";
     std::string json = read_file(filepath);

@@ -2,22 +2,15 @@
 
 #include <doctest/doctest.h>
 
-#include <optional>
-#include <cstdlib>
 #include <string>
 #include <fstream>
 #include <sstream>
 
 #include <json_hdr.h>
+#include <env_mgr.h>
 
-//todo move get_env_var & read_file to specific libraries
+//todo move read_file to specific libraries
 //it affects the coverage percentage
-std::optional<std::string> get_env_var(const char * name){
-    if (const char * rc = std::getenv(name)) {
-      return std::string {rc};
-    }
-    return std::nullopt;
-}
 
 std::string read_file(const std::string& path) {
     std::ifstream file(path);
@@ -30,7 +23,8 @@ std::string read_file(const std::string& path) {
 }
 
 TEST_CASE("JsonHdr parse") {
-  auto rc = get_env_var("RC");
+  auto & local = platform::EnvMgr::get_instance();
+  auto rc = local.get_env_var("RC");
   if (rc){
     std::string filepath = *rc + "/sample.json";
     std::string json = read_file(filepath);
