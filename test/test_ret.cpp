@@ -36,7 +36,7 @@ TEST_CASE("ResponseHdr get_data")
   auto &local = platform::EnvMgr::get_instance();
   auto rc = local.get_env_var("RC");
   if (rc) {
-    std::string filepath = *rc + "/sample.json";
+    std::string filepath = rc.value() + "/sample.json";
     std::string json = read_file(filepath);
 
     Response hdr{};
