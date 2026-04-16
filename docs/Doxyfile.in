@@ -11,6 +11,7 @@ INPUT                  = "/home/cxx-core/src" \
                          "/home/cxx-core/include/utils" \
                          "/home/cxx-core/include/xcgen" \
                          "/home/cxx-core/include/ret" \
+                         "/home/cxx-core/include/platform" \
                          "/home/cxx-core/README.md" \ 
                          "/home/cxx-core/docs/build.md" \
                          "/home/cxx-core/docs/docker.md" \
