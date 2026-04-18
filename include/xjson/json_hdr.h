@@ -76,8 +76,6 @@ public:
    * @retval success Returns pointer to internal document.
    * @retval failure Returns error info with type `JsonHdrError::ParseError`.
    *
-   * @note The returned pointer is valid as long as the `JsonHdr` instance
-   * exists.
    * @warning The input must be valid JSON; otherwise parsing will fail.
    */
   tl::expected<std::reference_wrapper<const rapidjson::Document>, JsonErrorInfo>
