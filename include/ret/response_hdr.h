@@ -24,7 +24,6 @@ namespace ret
  * - The first element (@c std::string) represents the response body or message.
  * - The second element (@c int) represents the associated port number.
  *
- * @note The port number is expected to be in the valid range [0, 65535].
  */
 using UResponse = std::tuple<std::string, int>;
 
