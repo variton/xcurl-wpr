@@ -115,3 +115,32 @@ add_test(NAME test_platform COMMAND $<TARGET_FILE:test_platform>)
 set_tests_properties(test_platform PROPERTIES
   ENVIRONMENT "RC=${TRC}"
 )
+
+#==================================================================
+
+add_executable(test_fio
+    test_fio.cpp
+)
+
+target_include_directories(test_fio PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}>
+  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/fio>
+  $<BUILD_INTERFACE:${CMAKE_INCLUDE_PATH}/utils>
+  $<INSTALL_INTERFACE:include>
+)
+
+#target_link_libraries(test_fio PRIVATE platform)
+
+target_link_options(test_fio PRIVATE
+                    $<$<CONFIG:Debug>:--coverage>)
+
+target_compile_options(test_fio PRIVATE
+                       -Wall -Wextra -pedantic
+                       $<$<CONFIG:Debug>:--coverage -Og -g>
+                       $<$<CONFIG:Release>:-O3 -DNDEBUG>)
+
+add_test(NAME test_fio COMMAND $<TARGET_FILE:test_fio>)
+
+set_tests_properties(test_fio PROPERTIES
+  ENVIRONMENT "RC=${TRC}"
+)
