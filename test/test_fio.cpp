@@ -8,15 +8,15 @@
 TEST_CASE("FileMgr read")
 {
   auto filepath = "/home/cxx-core/rc/sample.json";
-  //auto json_file = R"({"oblivion":{"host":"127.0.0.1","port":35000}})"; 
-  auto & fmgr = fio::FileMgr::get_instance(); 
+  // auto json_file = R"({"oblivion":{"host":"127.0.0.1","port":35000}})";
+  auto &fmgr = fio::FileMgr::get_instance();
   auto ret = fmgr.read(filepath);
   CHECK(ret);
 }
 
 TEST_CASE("FileMgr read fail")
 {
-  auto & fmgr = fio::FileMgr::get_instance();
+  auto &fmgr = fio::FileMgr::get_instance();
   auto ret = fmgr.read("$^ùu");
   if (!ret) {
     CHECK(ret.error().type == fio::FileMgrError::NoFile);

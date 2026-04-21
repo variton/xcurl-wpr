@@ -66,14 +66,18 @@ public:
     static FileMgr instance;
     return instance;
   }
-  
-  tl::expected<std::string,FileMgrErrorInfo> read(const std::string& path) noexcept{
+
+  tl::expected<std::string, FileMgrErrorInfo>
+  read(const std::string &path) noexcept
+  {
     std::ifstream file(path);
     if (!file.is_open())
-        return tl::unexpected(FileMgrErrorInfo{FileMgrError::NoFile,"Could not open file\n"});
+      return tl::unexpected(
+        FileMgrErrorInfo{FileMgrError::NoFile, "Could not open file\n"}
+      );
 
     std::ostringstream ss;
-    ss << file.rdbuf();       // dump entire file buffer into stream
+    ss << file.rdbuf(); // dump entire file buffer into stream
     return ss.str();
   }
 
@@ -87,6 +91,6 @@ private:
   FileMgr() = default;
 };
 
-} // namespace fio 
+} // namespace fio
 
 #endif
