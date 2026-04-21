@@ -1,5 +1,4 @@
 #!/usr/bin/bash
-
 BUILD_DIR="build/debug"
 #launch test if test-xcurl exits
 
